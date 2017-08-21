@@ -1,0 +1,64 @@
+if (diaryIsLib.toBoolean()) {
+  apply plugin: 'com.android.library'
+} else {
+  apply plugin: 'com.android.application'
+}
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    if (!diaryIsLib.toBoolean()) {
+      applicationId "com.fec.diary"
+    }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  sourceSets {
+    main {
+      if (diaryIsLib.toBoolean()) {
+        manifest.srcFile 'src/main/release/AndroidManifest.xml'
+      } else {
+        manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+      }
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  if (mapIsLib.toBoolean()) {
+    switch (mapImpl) {
+      case "2":
+        compile project(path: ':map', configuration: 'map2Debug')
+        break
+      default:
+        compile project(path: ':map', configuration: 'map1Debug')
+        break
+    }
+  }
+  switch (pushImpl) {
+    case "2":
+      compile project(path: ':push', configuration: 'stagingDebug')
+      break
+    default:
+      compile project(path: ':push', configuration: 'productionDebug')
+      break
+  }
+  compile 'com.android.support:appcompat-v7:26.+'
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  testCompile 'junit:junit:4.12'
+}

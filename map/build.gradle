@@ -1,0 +1,99 @@
+if (mapIsLib.toBoolean()) {
+  apply plugin: 'com.android.library'
+} else {
+  apply plugin: 'com.android.application'
+}
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+  defaultPublishConfig "map1Release"
+  publishNonDefault true
+  resourcePrefix "map_" //强制加前缀
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    if (!mapIsLib.toBoolean()) {
+      applicationId "com.fec.map"
+    }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [moduleName: project.getName()]
+      }
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  sourceSets {
+    map1 {
+      java.srcDirs = ['src/map1/java']
+      res.srcDirs = ['src/map1/res']
+      jniLibs.srcDirs = ['src/map1/libs']
+      //      if (mapIsLib.toBoolean()) {
+      //        manifest.srcFile 'src/map1/release/AndroidManifest.xml'
+      //      } else {
+      //        manifest.srcFile 'src/map1/debug/AndroidManifest.xml'
+      //      }
+      repositories.flatDir {
+        dirs 'src/map1/libs'
+      }
+    }
+
+    map2 {
+      java.srcDirs = ['src/map2/java']
+      res.srcDirs = ['src/map2/res']
+      jniLibs.srcDirs = ['src/map2/libs']
+      //      if (mapIsLib.toBoolean()) {
+      //        manifest.srcFile 'src/map2/release/AndroidManifest.xml'
+      //      } else {
+      //        manifest.srcFile 'src/map2/debug/AndroidManifest.xml'
+      //      }
+      repositories.flatDir {
+        dirs 'src/map2/libs'
+      }
+      dependencies {
+        compile files('src/map1/libs/BaiduLBS_Android.jar')
+      }
+    }
+    main {
+      if (mapIsLib.toBoolean()) {
+        map1 {
+          manifest.srcFile 'src/map1/release/AndroidManifest.xml'
+        }
+        map2 {
+          manifest.srcFile 'src/map2/release/AndroidManifest.xml'
+        }
+      } else {
+        map1 {
+          manifest.srcFile 'src/map1/debug/AndroidManifest.xml'
+        }
+        map2 {
+          manifest.srcFile 'src/map2/debug/AndroidManifest.xml'
+        }
+      }
+    }
+  }
+  productFlavors {
+    map1 {}
+    //    map2 {}
+  }
+}
+
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile project(':BaseLib')
+  compile 'com.android.support:appcompat-v7:26.+'
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  testCompile 'junit:junit:4.12'
+  annotationProcessor 'com.alibaba:arouter-compiler:1.1.3'
+}

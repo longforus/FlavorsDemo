@@ -1,0 +1,59 @@
+if (pushIsLib.toBoolean()) {
+  apply plugin: 'com.android.library'
+} else {
+  apply plugin: 'com.android.application'
+}
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+  defaultPublishConfig "productionRelease" //非常重要
+  publishNonDefault true
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    if (!pushIsLib.toBoolean()) {
+      applicationId "com.fec.push"
+    }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  sourceSets {
+    staginge {
+      java.srcDirs = ['src/staging/java']
+    }
+
+    production {
+      java.srcDirs = ['src/production/java']
+    }
+    main {
+      if (pushIsLib.toBoolean()) {
+        manifest.srcFile 'src/main/release/AndroidManifest.xml'
+      } else {
+        manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+      }
+    }
+  }
+  productFlavors {
+    staging {}
+    production {}
+  }
+}
+
+dependencies {
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile project(':BaseLib')
+  compile 'com.android.support:appcompat-v7:26.+'
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
+  testCompile 'junit:junit:4.12'
+}
