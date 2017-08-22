@@ -43,6 +43,9 @@ android {
       repositories.flatDir {
         dirs 'src/map1/libs'
       }
+      dependencies {
+        compile files('src/map1/libs/BaiduLBS_Android.jar')
+      }
     }
 
     map2 {
@@ -58,7 +61,7 @@ android {
         dirs 'src/map2/libs'
       }
       dependencies {
-        compile files('src/map1/libs/BaiduLBS_Android.jar')
+        compile files('src/map2/libs/AMap2DMap_5.2.0_AMapSearch_5.3.1_AMapLocation_3.5.0_20170817.jar')
       }
     }
     main {
@@ -86,6 +89,7 @@ android {
       dimension "map"
     }
     map2 {
+      manifestPlaceholders = [mapkey: "4c437d45ae617afe6830d21646d3c070"]
       dimension "map"
     }
   }

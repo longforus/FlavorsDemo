@@ -15,14 +15,15 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.fec.baselib.MapData;
-import com.fec.baselib.MapView;
+import com.fec.baselib.MapLocationListener;
+import com.fec.baselib.MyMapView;
 
 /**
  * Created by XQ Yang on 2017/8/21  18:05.
  * Description :
  */
 
-public class BaiduMapFragment extends Fragment implements MapView {
+public class BaiduMapFragment extends Fragment implements MyMapView {
 
     private com.baidu.mapapi.map.MapView mMapView;
     private BaiduMap mBaiduMap;
@@ -38,10 +39,17 @@ public class BaiduMapFragment extends Fragment implements MapView {
         return view;
     }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void addLocationListener(MapLocationListener listener) {
+
     }
 
     @Override

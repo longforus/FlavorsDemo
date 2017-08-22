@@ -12,9 +12,12 @@ import com.alibaba.android.arouter.facade.template.IProvider;
 public interface MapInf extends IProvider {
     String getdesc();
 
-    MapView getMapView(FragmentManager manager,Context context, int parentID);
+    MyMapView getMapView(FragmentManager manager,Context context, int parentID);
 
     void getLocation(Context context,MapLocationListener listener);
 
     void onDestroy();
+
+    void location();
+
 }

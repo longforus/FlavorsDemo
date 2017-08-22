@@ -5,8 +5,10 @@ package com.fec.baselib;
  * Description :
  */
 
-public interface MapView {
+public interface MyMapView {
     void location(MapData data);
 
     void onDestroy();
+
+    void addLocationListener(MapLocationListener listener);
 }
