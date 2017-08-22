@@ -9,6 +9,12 @@
     android:id="@+id/btn_show"
     android:text="getMap"
     />
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/btn_dw"
+    android:text="定位"
+    />
   <FrameLayout
       android:id="@+id/fl"
       android:layout_width="match_parent"

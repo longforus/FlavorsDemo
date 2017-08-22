@@ -41,9 +41,15 @@ android {
       }
     }
   }
+
+  flavorDimensions "push"
   productFlavors {
-    staging {}
-    production {}
+    staging {
+      dimension "push"
+    }
+    production {
+      dimension "push"
+    }
   }
 }
 

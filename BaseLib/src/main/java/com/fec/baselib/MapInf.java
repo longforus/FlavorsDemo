@@ -13,4 +13,6 @@ public interface MapInf extends IProvider {
     String getdesc();
 
     MapView getMapView(FragmentManager manager,Context context, int parentID);
+
+    void getLocation(Context context,MapLocationListener listener);
 }

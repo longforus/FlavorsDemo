@@ -79,9 +79,15 @@ android {
       }
     }
   }
+  flavorDimensions "map"
   productFlavors {
-    map1 {}
-    //    map2 {}
+    map1 {
+      manifestPlaceholders = [mapAk: "6VgXRQvcuSmjDARR6fSSmzuc9ybC5O7M"]
+      dimension "map"
+    }
+    map2 {
+      dimension "map"
+    }
   }
 }
 

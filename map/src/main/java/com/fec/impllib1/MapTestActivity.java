@@ -3,8 +3,11 @@ package com.fec.impllib1;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.fec.baselib.MapData;
 import com.fec.baselib.MapInf;
+import com.fec.baselib.MapLocationListener;
 import com.fec.baselib.MapView;
 
 public class MapTestActivity extends AppCompatActivity {
@@ -23,6 +26,18 @@ public class MapTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mMapView = mapInf.getMapView(getSupportFragmentManager(), MapTestActivity.this, R.id.fl);
+            }
+        });
+        findViewById(R.id.btn_dw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mapInf.getLocation(MapTestActivity.this, new MapLocationListener() {
+                    @Override
+                    public void onReceive(MapData mapData) {
+                        Toast.makeText(MapTestActivity.this, mapData.desc, Toast.LENGTH_SHORT).show();
+                        mMapView.location(mapData);
+                    }
+                });
             }
         });
 
