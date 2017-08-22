@@ -23,7 +23,7 @@ public class MapTestActivity extends AppCompatActivity {
         mTv = (TextView) findViewById(R.id.text_Info);
 
         mMapInf = (MapInf) ARouter.getInstance().build("/map/impl").navigation();
-
+        mTv.setText(mMapInf.getdesc());
 
         findViewById(R.id.btn_show).setOnClickListener(new View.OnClickListener() {
             @Override

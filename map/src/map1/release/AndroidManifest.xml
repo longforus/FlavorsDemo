@@ -24,7 +24,7 @@
   >
     <meta-data
         android:name="com.baidu.lbsapi.API_KEY"
-        android:value="	6VgXRQvcuSmjDARR6fSSmzuc9ybC5O7M" />
+        android:value="${mapAk}" />
   </application>
 
 </manifest>

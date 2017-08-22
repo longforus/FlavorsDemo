@@ -14,9 +14,14 @@ android {
     versionCode 1
     versionName "1.0"
     if (!diaryIsLib.toBoolean()) {
-      applicationId "com.fec.diary"
+      applicationId "com.fec.map"
     }
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [moduleName: project.getName()]
+      }
+    }
   }
   buildTypes {
     release {
@@ -43,22 +48,27 @@ dependencies {
   if (mapIsLib.toBoolean()) {
     switch (mapImpl) {
       case "2":
-        compile project(path: ':map', configuration: 'map2Debug')
+        debugCompile project(path: ':map', configuration: 'map2Debug')
+        releaseCompile project(path: ':map', configuration: 'map2Release')
         break
       default:
-        compile project(path: ':map', configuration: 'map1Debug')
+        debugCompile project(path: ':map', configuration: 'map1Debug')
+        releaseCompile project(path: ':map', configuration: 'map1Release')
         break
     }
   }
   switch (pushImpl) {
     case "2":
-      compile project(path: ':push', configuration: 'stagingDebug')
+      debugCompile project(path: ':push', configuration: 'stagingDebug')
+      releaseCompile project(path: ':push', configuration: 'stagingRelease')
       break
     default:
-      compile project(path: ':push', configuration: 'productionDebug')
+      debugCompile project(path: ':push', configuration: 'productionDebug')
+      releaseCompile project(path: ':push', configuration: 'productionRelease')
       break
   }
   compile 'com.android.support:appcompat-v7:26.+'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   testCompile 'junit:junit:4.12'
+  annotationProcessor 'com.alibaba:arouter-compiler:1.1.3'
 }

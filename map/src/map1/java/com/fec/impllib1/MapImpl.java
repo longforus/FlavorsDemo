@@ -47,6 +47,7 @@ public class MapImpl implements MapInf {
     @Override
     public void init(Context context) {
         mContext = context;
+
         SDKInitializer.initialize(context.getApplicationContext());
     }
 
