@@ -13,6 +13,7 @@ import com.fec.baselib.MapView;
 public class MapTestActivity extends AppCompatActivity {
 
     private MapView mMapView;
+    private MapInf mMapInf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +22,18 @@ public class MapTestActivity extends AppCompatActivity {
         //final MapInf mapInf = ServiceBus.getService(MapInf.class);
         //mapInf.init(this);
 
-        final MapInf mapInf = (MapInf) ARouter.getInstance().build("/map/impl").navigation();
+
+        mMapInf = (MapInf) ARouter.getInstance().build("/map/impl").navigation();
         findViewById(R.id.btn_show).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMapView = mapInf.getMapView(getSupportFragmentManager(), MapTestActivity.this, R.id.fl);
+                mMapView = mMapInf.getMapView(getSupportFragmentManager(), MapTestActivity.this, R.id.fl);
             }
         });
         findViewById(R.id.btn_dw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mapInf.getLocation(MapTestActivity.this, new MapLocationListener() {
+                mMapInf.getLocation(MapTestActivity.this, new MapLocationListener() {
                     @Override
                     public void onReceive(MapData mapData) {
                         Toast.makeText(MapTestActivity.this, mapData.desc, Toast.LENGTH_SHORT).show();
@@ -42,5 +44,12 @@ public class MapTestActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+        mMapInf.onDestroy();
     }
 }

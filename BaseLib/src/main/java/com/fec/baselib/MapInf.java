@@ -15,4 +15,6 @@ public interface MapInf extends IProvider {
     MapView getMapView(FragmentManager manager,Context context, int parentID);
 
     void getLocation(Context context,MapLocationListener listener);
+
+    void onDestroy();
 }

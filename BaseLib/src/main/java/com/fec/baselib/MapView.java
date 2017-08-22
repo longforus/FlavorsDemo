@@ -7,4 +7,6 @@ package com.fec.baselib;
 
 public interface MapView {
     void location(MapData data);
+
+    void onDestroy();
 }
